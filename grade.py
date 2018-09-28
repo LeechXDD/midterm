@@ -46,16 +46,19 @@ for j in range(9):
 
 
 
-for totalgrade in range(len(totalgrade_list[0:])):
+for number in range(len(totalgrade_list)):
     
-    eachline[totalgrade].insert(10,totalgrade_list[totalgrade])
+    eachline[number].insert(10,totalgrade_list[number])
+    eachline[number].insert(11,meannum_student[number])
+
+
 
 for q in range(len(eachline)):
     for fail in eachline[q][1:]:
         if int(fail)<60:
             eachline[q][eachline[q].index(fail)]='不及格'
 
-eachline = sorted(eachline,key=lambda x:x[-1],reverse=True)
+eachline = sorted(eachline,key=lambda x:x[-2],reverse=True)
 
 eachline.insert(0,''.join(data[0]))
 
@@ -65,7 +68,7 @@ for rank in range(len(eachline[1:])):
     eachline[rank+1] = str(rank+1) +' '.join('%s'%e for e in eachline[rank+1])
     
 eachline.insert(1,meannum_subject)
-eachline[0]= "名次 "+''.join(eachline[0].strip())+' 总分'
+eachline[0]= "名次 "+''.join(eachline[0].strip())+' 总分 平均分'
 eachline[1]= '0平均 '+' '.join('%s '%id for id in eachline[1])
 
 w = open('newreport.txt','w')
