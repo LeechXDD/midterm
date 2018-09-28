@@ -1,4 +1,8 @@
-# -*- coding: gbk -*-
+# -*- coding: utf8 -*-
+
+import sys
+reload(sys)
+sys.setdefaultencoding('utf-8')
 
 
 eachline = []
@@ -39,30 +43,31 @@ for j in range(9):
     subjectnum =0
 
 
-totalgrade_list = sorted(totalgrade_list,reverse=True)
+
 
 
 for totalgrade in range(len(totalgrade_list[0:])):
     
-    eachline[totalgrade].insert(10,str(totalgrade_list[totalgrade]))
+    eachline[totalgrade].insert(10,totalgrade_list[totalgrade])
 
 for q in range(len(eachline)):
     for fail in eachline[q][1:]:
         if int(fail)<60:
-            eachline[q][eachline[q].index(fail)]='²»¼°¸ñ'
+            eachline[q][eachline[q].index(fail)]='ä¸åŠæ ¼'
+
+eachline = sorted(eachline,key=lambda x:x[-1],reverse=True)
+
+eachline.insert(0,''.join(data[0]))
 
 
-
-eachline.insert(0,data[0])
-eachline.insert(1,meannum_subject)
-eachline[0]= 'Ãû´Î '+str(eachline[0])
-eachline[1]= 'Æ½¾ù '+str(eachline[1])
-    
+ 
 for rank in range(len(eachline[1:])):
+    eachline[rank+1] = str(rank+1) +' '.join('%s'%e for e in eachline[rank+1])
     
-    eachline[rank+1] = str(rank)+' '+str(eachline[rank+1])+"\n"
-
+eachline.insert(1,meannum_subject)
+eachline[0]= "åæ¬¡ "+''.join(eachline[0].strip())+' æ€»åˆ†'
+eachline[1]= '0å¹³å‡ '+' '.join('%s '%id for id in eachline[1])
 
 w = open('newreport.txt','w')
-w.writelines(eachline)
+w.writelines('\n'.join('%s'%m for m in eachline))
 w.close()
